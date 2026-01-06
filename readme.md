@@ -183,31 +183,37 @@ class BookRequest(BaseModel):
 
 ## 🗄 Database ER Diagram
 
+```mermaid
+erDiagram
+    USERS {
+        UUID member_id PK
+        STRING name
+        STRING email
+    }
+
+    BOOKS {
+        UUID book_id PK
+        STRING title
+        STRING author
+        BOOLEAN is_borrowed
+        DATETIME borrowed_date
+        UUID borrowed_by FK
+    }
+
+    USERS ||--o{ BOOKS : borrows
 ```
-┌──────────────┐            1        ┌──────────────┐
-│    Users     │────────────────────▶│    Books     │
-└──────────────┘                     └──────────────┘
-```
-
-### Users
-| Field       | Type   | Constraints |
-|-------------|--------|-------------|
-| member_id   | UUID   | PK, Indexed |
-| name        | String | Required    |
-| email       | String | Unique, Required |
-
-### Books
-| Field         | Type     | Constraints                          |
-|---------------|----------|--------------------------------------|
-| book_id       | UUID     | PK, Indexed                          |
-| title         | String   | Required                             |
-| author        | String   | Required                             |
-| is_borrowed   | Boolean  | Default=False                        |
-| borrowed_date | DateTime | Nullable                             |
-| borrowed_by   | UUID     | FK → Users.member_id (Nullable)      |
-
 📌 **Relationship**
 - A **user can borrow multiple books**
 - A **book can only be borrowed by one user at a time**
-- `borrowed_by = NULL` means book is available
+```
+### 🔍 Field Details
+
+**Users**
+- `member_id` — Primary Key (UUID)
+- `email` — Must be unique
+
+**Books**
+- `borrowed_by` — Foreign Key → Users.member_id (nullable)
+- `is_borrowed` — True if the book is currently borrowed
+- `borrowed_date` — Timestamp when borrowed
 ```
