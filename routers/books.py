@@ -1,10 +1,9 @@
 from fastapi import APIRouter, Depends, Path, status
 from sqlalchemy.orm import Session
 from typing import Annotated
-from pydantic import BaseModel, Field
-
 from database import SessionLocal
 from services import books_service
+from schemas.book_request import BookRequest
 
 
 router = APIRouter(prefix="/books", tags=["books"])
@@ -21,9 +20,7 @@ def get_db():
 db_dependency = Annotated[Session, Depends(get_db)]
 
 
-class BookRequest(BaseModel):
-    title: str = Field(min_length=3)
-    author: str = Field(min_length=3)
+
 
 
 @router.get("/")

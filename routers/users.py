@@ -1,10 +1,9 @@
 from typing import Annotated
-from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends, Path, status
-
 from database import SessionLocal
 from services import users_service
+from schemas.user_request import UserRequest
 
 
 router = APIRouter(
@@ -24,9 +23,7 @@ def get_db():
 db_dependency = Annotated[Session, Depends(get_db)]
 
 
-class UserRequest(BaseModel):
-    name: str = Field(min_length=3)
-    email: str = Field(min_length=3)
+
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
 async def add_new_user(db: db_dependency, user_request: UserRequest):
