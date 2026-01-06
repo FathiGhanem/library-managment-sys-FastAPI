@@ -91,22 +91,25 @@ The system allows managing books and library members, including borrowing and re
 
 ## 📁 Project Structure
 
-Library Management System
+```
+Library Management System/
 ├── main.py
 ├── database.py
+├── requirements.txt
 ├── models/
-│ ├── books_model.py
-│ └── users_model.py
+│   ├── books_model.py
+│   └── users_model.py
 ├── schemas/
-│ ├── book_request.py
-│ └── user_request.py
+│   ├── book_request.py
+│   └── user_request.py
 ├── routers/
-│ ├── books.py
-│ └── users.py
-├── services/
-│ ├── books_service.py
-│ └── users_service.py
-└── requirements.txt
+│   ├── books.py
+│   └── users.py
+└── services/
+    ├── books_service.py
+    └── users_service.py
+```
+
 
 
 - `models/` → SQLAlchemy database tables  
