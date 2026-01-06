@@ -181,3 +181,33 @@ class BookRequest(BaseModel):
     author: str = Field(min_length=3)
 
 
+## 🗄 Database ER Diagram
+
+```
+┌──────────────┐            1        ┌──────────────┐
+│    Users     │────────────────────▶│    Books     │
+└──────────────┘                     └──────────────┘
+```
+
+### Users
+| Field       | Type   | Constraints |
+|-------------|--------|-------------|
+| member_id   | UUID   | PK, Indexed |
+| name        | String | Required    |
+| email       | String | Unique, Required |
+
+### Books
+| Field         | Type     | Constraints                          |
+|---------------|----------|--------------------------------------|
+| book_id       | UUID     | PK, Indexed                          |
+| title         | String   | Required                             |
+| author        | String   | Required                             |
+| is_borrowed   | Boolean  | Default=False                        |
+| borrowed_date | DateTime | Nullable                             |
+| borrowed_by   | UUID     | FK → Users.member_id (Nullable)      |
+
+📌 **Relationship**
+- A **user can borrow multiple books**
+- A **book can only be borrowed by one user at a time**
+- `borrowed_by = NULL` means book is available
+```
